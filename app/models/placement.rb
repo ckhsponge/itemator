@@ -4,14 +4,14 @@ class Placement
   FILE_NAME = "items.xml"
   attr_accessor :id, :items
   def initialize(dir, header, row, item_hash)
-    raise "missing header" unless header
-    raise "missing placement data" unless row
-    raise "missing item_hash" unless item_hash
+    raise ItemException.new("missing header for placements") unless header
+    raise ItemException.new("missing placement data") unless row
+    raise ItemException.new("missing item_hash") unless item_hash
     item_indices = []
     placement_index = nil
     header.each_with_index {|h, i| item_indices << i if h && h.to_s.downcase.index("item ") == 0 }
     header.each_with_index {|h, i| placement_index = i if h && h.downcase == "placement id" }
-    raise "no placement column" unless placement_index
+    raise ItemException.new("no placement column") unless placement_index
     @id = row[placement_index] || ""
     @items = []
     item_indices.each do |i|

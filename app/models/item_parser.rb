@@ -5,10 +5,12 @@ class ItemParser
   attr_accessor :path, :items_csv, :order_csv, :placement_hash
   
   def initialize(args)
-    raise "no args" unless args
+    raise ItemException.new("no args") unless args
     @path = args[:path]
     @items_csv = args[:items_csv]
     @order_csv = args[:order_csv]
+    
+    raise ItemException.new("Missing path") if @path.empty?
     
     header = nil
     @item_hash = {}
@@ -18,7 +20,7 @@ class ItemParser
         header = row
       else
         item = Item.new(header, row)
-        raise "item id already defined" if @item_hash[item.id]
+        raise ItemException.new("item id multi defined: '#{item.id}'") if @item_hash[item.id]
         @item_hash[item.id] = item
       end
     end
@@ -31,7 +33,7 @@ class ItemParser
         header = row
       else
         placement = Placement.new(@path, header, row, @item_hash)
-        raise "placement already defined: #{placement.id}" if @placement_hash[placement.id]
+        raise ItemException.new("placement multi defined: '#{placement.id}'") if @placement_hash[placement.id]
         @placement_hash[placement.id] = placement
       end
     end

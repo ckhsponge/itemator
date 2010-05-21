@@ -1,5 +1,7 @@
 %h1
   New Items
+- if flash[:note]
+  %p{:style => "color:red"}= h flash[:note]
 - form_for :items, :url => { :action => "create" }, :html => {:multipart => true} do |f|
   %p
     Path:
