@@ -50,7 +50,7 @@ class Placement
     s.split(/\s/).each do |word|
       next unless word.include?("=")
       pair = word.split("=")
-      next unless pair && pair.count == 2
+      next unless pair && pair.size == 2
       result[pair[0]] = pair[1].gsub(/'|"/, '')
     end
     return result
