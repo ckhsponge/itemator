@@ -1,0 +1,5 @@
+log
+public/cache
+config/deploy.rb
+.project
+
