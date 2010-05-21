@@ -1,3 +1,4 @@
+Capfile
 log
 public/cache
 config/deploy.rb
