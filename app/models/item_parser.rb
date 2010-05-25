@@ -18,7 +18,7 @@ class ItemParser
     @item_hash = {}
     #CSV.open @items_csv.path, 'r' do |row|
     CSV.parse @items_csv do |row|
-      puts "r: #{row.inspect}"
+      #puts "ITEM: #{row.inspect}"
       unless header
         header = row
       else
@@ -33,6 +33,8 @@ class ItemParser
     @placement_hash = {}
     #CSV.open @order_csv.path, 'r' do |row|
     CSV.parse @order_csv do |row|
+      next unless row && !row.first.nil? && row.size > 1
+      #puts "ORDER: #{row.inspect}"
       unless header
         header = row
       else
