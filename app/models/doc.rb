@@ -1,5 +1,9 @@
 require 'gdata'
 class Doc < ActiveRecord::Base
+  SUCCESS_STATUS = "Good"
+  FAIL_STATUS = "Failed"
+  
+  default_scope(:order => "folder, title")
   
   def self.get_or_create(args = {})
     puts "#{args[:folder]}, #{args[:title]}, #{args[:key]}"
@@ -14,13 +18,30 @@ class Doc < ActiveRecord::Base
   end
   
   def parse(google_client)
-    items_csv = google_client.get(self.items_url).body
-    order_csv = google_client.get(self.order_url).body
+    begin
+      items_csv = google_client.get(self.items_url).body
+      order_csv = google_client.get(self.order_url).body
     
-    parser = ItemParser.new(:path => self.path, :items_csv => items_csv, :order_csv => order_csv)
-    parser.write_xml
-    self.parsed = true
-    self.save!
+      parser = ItemParser.new(:path => self.path, :items_csv => items_csv, :order_csv => order_csv)
+      parser.write_xml
+      self.parsed = true
+      self.status = SUCCESS_STATUS
+      self.save!
+    rescue GData::Client::RequestError => rerr
+      self.parsed = false
+      self.status = "#{FAIL_STATUS} - Google - #{rerr.to_s}" 
+      self.save!
+    rescue ItemException => iexc
+      self.parsed = false
+      self.status = "#{FAIL_STATUS} - Parse - #{iexc.to_s}" 
+      self.save!
+    rescue Exception => exc
+      self.parsed = false
+      self.status = "#{FAIL_STATUS} - Parse - #{exc.to_s}" 
+      self.save!
+    end
+    
+    return parser
   end
   
   def items_url

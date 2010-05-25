@@ -1,0 +1,8 @@
+%span{:title => @doc.status}= h @doc.status[0,50]
+- if @item_parser && @item_parser.placement_hash && !@item_parser.placement_hash.empty?
+  = link_to_function "detail", "$(this).next('.detail').toggle()"
+  .detail{:style => "display:none"}
+    - @item_parser.placement_hash.values.each do |placement|
+      - url = "#{request.protocol}#{request.host_with_port}/#{placement.path}"
+      = link_to url, url
+      %br/

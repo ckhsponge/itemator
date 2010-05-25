@@ -10,9 +10,12 @@
     %td Status
   - @docs.each do |doc|
     %tr
-      %td= h doc.folder
-      %td= h doc.title
-      %td= h doc.parsed
-      %td= h doc.status
-      %td
-        = link_to "parse", :action => "parse", :id => doc.id
+      %td{:valign => "top"}= h doc.folder
+      %td{:valign => "top"}= h doc.title
+      %td{:valign => "top"}= h doc.parsed
+      %td{:valign => "top"}
+        = link_to_remote "parse", :url => {:action => "parse", :id => doc.id}, :update => "status#{doc.id}"
+        /%a{:href => url_for(:action => "parse", :id => doc.id), "data-remote" => "true", "data-update-success" => "result"} parse
+      %td{:id => "status#{doc.id}", :valign => "top"}
+        %span{:title => doc.status}= h doc.status[0,50]
+        

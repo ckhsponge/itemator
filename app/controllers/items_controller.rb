@@ -31,9 +31,9 @@ class ItemsController < ApplicationController
   end
   
   def parse
-    doc = Doc.find(params[:id])
-    doc.parse(@google_client)
-    render :text => doc.parsed? ? "success" : "fail"
+    @doc = Doc.find(params[:id])
+    @item_parser = @doc.parse(@google_client)
+    render :action => "status_detail", :layout => false
   end
   
   def refresh_docs

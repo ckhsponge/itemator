@@ -1,0 +1,10 @@
+%html
+  %head
+    %title
+      Itemator
+    %script{ :src => "http://www.google.com/jsapi" }
+    %script google.load("jquery", "1");
+    %script google.load("jqueryui", "1");
+    = javascript_include_tag "jquery-ujs"
+  %body
+    = yield
