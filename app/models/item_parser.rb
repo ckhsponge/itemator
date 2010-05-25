@@ -12,9 +12,12 @@ class ItemParser
     
     raise ItemException.new("Missing path") if @path.empty?
     
+    #puts @items_csv
+    
     header = nil
     @item_hash = {}
-    CSV.open @items_csv.path, 'r' do |row|
+    #CSV.open @items_csv.path, 'r' do |row|
+    CSV.parse @items_csv do |row|
       puts "r: #{row.inspect}"
       unless header
         header = row
@@ -28,7 +31,8 @@ class ItemParser
     
     header = nil
     @placement_hash = {}
-    CSV.open @order_csv.path, 'r' do |row|
+    #CSV.open @order_csv.path, 'r' do |row|
+    CSV.parse @order_csv do |row|
       unless header
         header = row
       else

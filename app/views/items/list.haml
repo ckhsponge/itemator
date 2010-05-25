@@ -1,0 +1,18 @@
+
+%h1
+  Docs
+= link_to "Refresh Docs", :action => 'refresh_docs'
+%table
+  %tr
+    %td Folder
+    %td Title
+    %td Parsed
+    %td Status
+  - @docs.each do |doc|
+    %tr
+      %td= h doc.folder
+      %td= h doc.title
+      %td= h doc.parsed
+      %td= h doc.status
+      %td
+        = link_to "parse", :action => "parse", :id => doc.id

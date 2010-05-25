@@ -7,4 +7,10 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  
+  protected
+  def google_sign_in
+    @google_client = ::GData::Client::DocList.new
+    @google_client.clientlogin(ENV['GOOGLE_EMAIL'], ENV['GOOGLE_PASSWORD'])
+  end
 end
