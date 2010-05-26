@@ -2,11 +2,15 @@
 %h1
   Docs
 = link_to "Refresh Docs", :action => 'refresh_docs'
+%i
+  gets titles of all documents in folders that are readable by
+  = h ENV['GOOGLE_EMAIL']
 %table
   %tr
     %td Folder
     %td Title
     %td Parsed
+    %td
     %td Status
   - @docs.each do |doc|
     %tr
@@ -14,7 +18,7 @@
       %td{:valign => "top"}= h doc.title
       %td{:valign => "top"}= h doc.parsed
       %td{:valign => "top"}
-        = link_to_remote "parse", :url => {:action => "parse", :id => doc.id}, :update => "status#{doc.id}"
+        = link_to_remote "update", :url => {:action => "update", :id => doc.id}, :update => "status#{doc.id}"
         /%a{:href => url_for(:action => "parse", :id => doc.id), "data-remote" => "true", "data-update-success" => "result"} parse
       %td{:id => "status#{doc.id}", :valign => "top"}
         %span{:title => doc.status}= h doc.status[0,50]

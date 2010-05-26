@@ -3,7 +3,7 @@ require 'gdata'
 require 'pp'
 class ItemsController < ApplicationController
   
-  before_filter :google_sign_in, :only => [:parse, :refresh_docs] 
+  before_filter :google_sign_in, :only => [:update, :refresh_docs] 
   
   def list
     @docs = Doc.find(:all)
@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
     end
   end
   
-  def parse
+  def update
     @doc = Doc.find(params[:id])
     @item_parser = @doc.parse(@google_client)
     render :action => "status_detail", :layout => false

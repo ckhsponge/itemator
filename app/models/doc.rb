@@ -39,6 +39,7 @@ class Doc < ActiveRecord::Base
       self.parsed = false
       self.status = "#{FAIL_STATUS} - Parse - #{exc.to_s}" 
       self.save!
+      raise exc
     end
     
     return parser
