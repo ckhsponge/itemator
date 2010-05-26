@@ -16,7 +16,8 @@ class Placement
     @items = []
     item_indices.each do |i|
       next if row.size < i
-      next unless item_hash[row[i]]
+      next if row[i].blank?
+      raise ItemException.new("no item found for '#{row[i]}'") unless item_hash[row[i]]
       item = item_hash[row[i]]
       @items << item
     end
