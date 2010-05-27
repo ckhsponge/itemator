@@ -16,9 +16,11 @@ class Placement
     @items = []
     item_indices.each do |i|
       next if row.size < i
-      next if row[i].blank?
-      raise ItemException.new("no item found for '#{row[i]}'") unless item_hash[row[i]]
-      item = item_hash[row[i]]
+      key = row[i]
+      next if key.blank? || key.strip.blank?
+      key = key.strip
+      item = item_hash[key]
+      raise ItemException.new("no item found for '#{key}'") unless item
       @items << item
     end
     @dir = File.join("cache", dir)

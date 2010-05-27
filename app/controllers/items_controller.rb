@@ -3,8 +3,6 @@ require 'gdata'
 require 'pp'
 class ItemsController < ApplicationController
   
-  before_filter :google_sign_in, :only => [:update, :refresh_docs] 
-  
   def list
     @docs = Doc.find(:all)
   end
@@ -32,12 +30,12 @@ class ItemsController < ApplicationController
   
   def update
     @doc = Doc.find(params[:id])
-    @item_parser = @doc.parse(@google_client)
+    @item_parser = @doc.parse(google_spreadsheets_api)
     render :action => "status_detail", :layout => false
   end
   
   def refresh_docs
-    response = @google_client.get('http://docs.google.com/feeds/documents/private/full?showfolders=true')
+    response = google_doclist_api.get('http://docs.google.com/feeds/documents/private/full?showfolders=true')
     feed = response.to_xml
     
     full_id = nil

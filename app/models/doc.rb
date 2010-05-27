@@ -46,7 +46,7 @@ class Doc < ActiveRecord::Base
   end
   
   def items_url
-    "http://spreadsheets.google.com/pub?key=#{self.key}&output=csv"
+    "http://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=#{self.key}&exportFormat=csv"
   end
   
   def order_url
