@@ -4,11 +4,19 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  
+  before_filter :authenticate_user
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   
   protected
+  def authenticate_user
+    authenticate_or_request_with_http_basic do |user_name, password|
+      user_name == ENV['APP_USER'] && password == ENV['APP_PASSWORD']
+    end
+  end
+  
   def google_doclist_api
     unless @google_doclist_api
       @google_doclist_api = ::GData::Client::DocList.new

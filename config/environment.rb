@@ -46,3 +46,5 @@ end
 private_settings = YAML.load(File.read("#{RAILS_ROOT}/config/private.yml"))
 ENV['GOOGLE_EMAIL'] = private_settings['google_email']
 ENV['GOOGLE_PASSWORD'] = private_settings['google_password']
+ENV['APP_USER'] = private_settings['app_user']
+ENV['APP_PASSWORD'] = private_settings['app_password']
