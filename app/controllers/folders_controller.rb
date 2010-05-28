@@ -1,12 +1,14 @@
+require 'pp'
 class FoldersController < ApplicationController
   layout "items"
+  skip_before_filter :authenticate_user, :only => :default
   
   def list
     @folders = Doc.find(:all, :group => "folder").collect{|i| i.folder}
   end
   
   def refresh_docs
-    response = google_doclist_api.get('http://docs.google.com/feeds/documents/private/full?showfolders=true')
+    response = google_doclist_api.get("http://docs.google.com/feeds/documents/private/full?showfolders=true")
     feed = response.to_xml
     
     full_id = nil
@@ -32,5 +34,14 @@ class FoldersController < ApplicationController
     end
     
     redirect_to :action => 'list'
+  end
+  
+  def default
+    path = Doc.default_full_path(params[:folder], params[:title])
+    if File.exist?(path)
+      render :file => path
+    else
+      render :text => "default file not found", :status => 404
+    end
   end
 end

@@ -56,4 +56,8 @@ class Doc < ActiveRecord::Base
   def example_url
     "http://#{ENV['HOST_CDN']}/#{Item::BASE_DIR}/#{self.path}/#{Item::PLACEMENT_DIR}/[placement id]/#{Item::FILE_NAME}"
   end
+  
+  def self.default_full_path(folder, title)
+    "#{RAILS_ROOT}/public/#{Item::BASE_DIR}/#{folder}/#{title}/#{Item::FILE_NAME}"
+  end
 end
