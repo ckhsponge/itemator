@@ -1,4 +1,8 @@
 class Item
+  BASE_DIR = "cache"
+  PLACEMENT_DIR = "placements"
+  FILE_NAME = "items.xml"
+  
   attr_accessor :id, :values
   def initialize(header, row)
     raise ItemException.new("Missing items data") unless header && row
@@ -19,4 +23,5 @@ class Item
     end
     raise ItemException.new("no id value for item") unless @id
   end
+  
 end

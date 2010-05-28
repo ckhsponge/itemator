@@ -52,4 +52,8 @@ class Doc < ActiveRecord::Base
   def order_url
     "#{items_url}&gid=1"
   end
+  
+  def example_url
+    "http://#{ENV['HOST_CDN']}/#{Item::BASE_DIR}/#{self.path}/#{Item::PLACEMENT_DIR}/[placement id]/#{Item::FILE_NAME}"
+  end
 end

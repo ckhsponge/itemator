@@ -7,4 +7,10 @@
     %script google.load("jqueryui", "1");
     = javascript_include_tag "jquery-ujs"
   %body
+    = link_to "Folders", :controller => "folders", :action => "list"
+    &middot;
+    = link_to "Refresh Docs", :controller => "folders", :action => 'refresh_docs'
+    %i
+      gets titles of all documents in folders that are readable by
+      = h ENV['GOOGLE_EMAIL']
     = yield

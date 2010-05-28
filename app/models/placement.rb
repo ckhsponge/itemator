@@ -1,7 +1,5 @@
 require 'pp'
 class Placement
-  BASE_DIR = "cache"
-  FILE_NAME = "items.xml"
   attr_accessor :id, :items
   def initialize(dir, header, row, item_hash)
     raise ItemException.new("missing header for placements") unless header
@@ -23,8 +21,8 @@ class Placement
       raise ItemException.new("no item found for '#{key}'") unless item
       @items << item
     end
-    @dir = File.join("cache", dir)
-    @dir = File.join(@dir, "placements", @id) unless @id.blank?
+    @dir = File.join(Item::BASE_DIR, dir)
+    @dir = File.join(@dir, Item::PLACEMENT_DIR, @id) unless @id.blank?
   end
   
   def to_xml
@@ -64,11 +62,11 @@ class Placement
   end
   
   def server_path
-    File.join(server_dir, FILE_NAME)
+    File.join(server_dir, Item::FILE_NAME)
   end
   
   def path
-    File.join(@dir, FILE_NAME)
+    File.join(@dir, Item::FILE_NAME)
   end
   
   def write
