@@ -36,9 +36,11 @@ class FoldersController < ApplicationController
     redirect_to :action => 'list'
   end
   
+  #if the placement file does not exist then send the default
   def default
     path = Doc.default_full_path(params[:folder], params[:title])
     if File.exist?(path)
+      headers["Cache-Control"]="max-age=#{15*60}"
       render :file => path
     else
       render :text => "default file not found", :status => 404

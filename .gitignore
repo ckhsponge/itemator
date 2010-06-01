@@ -1,3 +1,4 @@
+.loadpath
 config/database.yml
 config/private.yml
 Capfile
