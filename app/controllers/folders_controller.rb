@@ -41,6 +41,7 @@ class FoldersController < ApplicationController
     path = Doc.default_full_path(params[:folder], params[:title])
     if File.exist?(path)
       headers["Cache-Control"]="max-age=#{15*60}"
+      headers["Vary"]="Accept-Encoding"
       render :file => path
     else
       render :text => "default file not found", :status => 404
