@@ -33,7 +33,7 @@ class ItemParser
     @placement_hash = {}
     #CSV.open @order_csv.path, 'r' do |row|
     CSV.parse @order_csv do |row|
-      next unless row && !row.first.nil? && row.size > 1
+      next unless row && row.size > 1 #skip rows that are nil or that have 1 or less columns
       #puts "ORDER: #{row.inspect}"
       unless header
         header = row
@@ -43,11 +43,12 @@ class ItemParser
         @placement_hash[placement.id] = placement
       end
     end
+    puts "** placement ids #{@placement_hash.keys.sort.inspect}"
+    puts "** placement_hash #{@placement_hash.inspect}"
     #check for empty placements
     raise ItemException.new("No items for any placements!") unless @placement_hash.values.inject(false) {|s,placement| s || placement.has_items?}
     raise ItemException.new("No default placement.") unless @placement_hash[Placement::DEFAULT_ID]
     raise ItemException.new("No items for default placement.") unless @placement_hash[Placement::DEFAULT_ID].has_items?
-    puts "** placement_hash #{@placement_hash.inspect}"
   end
   
   def valid?
