@@ -58,8 +58,12 @@ class Placement
     return result
   end
   
+  def self.public_dir
+    File.join(RAILS_ROOT,"public")
+  end
+  
   def server_dir
-    File.join(RAILS_ROOT,"public",@dir)
+    File.join(Placement.public_dir,@dir)
   end
   
   def server_path
