@@ -27,7 +27,7 @@ class ItemParser
         @item_hash[item.id] = item
       end
     end
-    puts @item_hash.inspect
+    puts "** Item Hash #{@item_hash.inspect}"
     
     header = nil
     @placement_hash = {}
@@ -43,7 +43,11 @@ class ItemParser
         @placement_hash[placement.id] = placement
       end
     end
-    puts "placement_hash #{@placement_hash}"
+    #check for empty placements
+    raise ItemException.new("No items for any placements!") unless @placement_hash.values.inject(false) {|s,placement| s || placement.has_items?}
+    raise ItemException.new("No default placement.") unless @placement_hash[Placement::DEFAULT_ID]
+    raise ItemException.new("No items for default placement.") unless @placement_hash[Placement::DEFAULT_ID].has_items?
+    puts "** placement_hash #{@placement_hash.inspect}"
   end
   
   def valid?

@@ -1,5 +1,6 @@
 require 'pp'
 class Placement
+  DEFAULT_ID = ""
   attr_accessor :id, :items
   def initialize(dir, header, row, item_hash)
     raise ItemException.new("missing header for placements") unless header
@@ -75,5 +76,9 @@ class Placement
     file.write(self.to_xml)
     file.close
     puts "Wrote: #{file.path}"
+  end
+  
+  def has_items?
+    return @items && !@items.empty?
   end
 end

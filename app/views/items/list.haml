@@ -21,5 +21,5 @@
         = link_to_remote "update", :url => {:action => "update", :id => doc.id}, :update => "status#{doc.id}"
         /%a{:href => url_for(:action => "parse", :id => doc.id), "data-remote" => "true", "data-update-success" => "result"} parse
       %td{:id => "status#{doc.id}", :valign => "top"}
-        %span{:title => doc.status}= h doc.status[0,50]
+        %span{:title => doc.status}= h doc.status[0,75]
         
