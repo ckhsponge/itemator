@@ -1,8 +1,0 @@
-
-%h1
-  Folders
-%table
-  - @folders.each do |folder|
-    %tr
-      %td{:valign => "top"}
-        = link_to folder, :controller => "items", :action => "list", :folder => folder

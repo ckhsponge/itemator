@@ -3,7 +3,7 @@ class FoldersController < ApplicationController
   layout "items"
   skip_before_filter :authenticate_user, :only => :default
   
-  def list
+  def index
     @folders = Doc.find(:all, :group => "folder").collect{|i| i.folder}
   end
   
@@ -33,7 +33,7 @@ class FoldersController < ApplicationController
       Doc.get_or_create(:folder => folder, :title => title, :key => key)
     end
     
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
   
   #if the placement file does not exist then send the default

@@ -2,14 +2,16 @@
   %head
     %title
       Itemator
-    %script{ :src => "http://www.google.com/jsapi" }
-    %script google.load("jquery", "1");
-    %script google.load("jqueryui", "1");
-    = javascript_include_tag "jquery-ujs"
+    -#%script{ :src => "http://www.google.com/jsapi" }
+    -#%script google.load("jquery", "1");
+    -#%script google.load("jqueryui", "1");
+    -#= javascript_include_tag "jquery-ujs"
+    = javascript_include_tag :jquery
+    = csrf_meta_tag
   %body
-    = link_to "Folders", :controller => "folders", :action => "list"
+    = link_to "Folders", folders_path
     &middot;
-    = link_to "Refresh Docs", :controller => "folders", :action => 'refresh_docs'
+    = link_to "Refresh Docs", refresh_docs_folders_path
     %i
       gets titles of all documents in folders that are readable by
       = h ENV['GOOGLE_EMAIL']

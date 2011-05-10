@@ -1,0 +1,27 @@
+%h1
+  Success
+%h2
+  Path:
+  = @item_parser.path
+- placement_hash = @item_parser.placement_hash
+%p
+  - placement_hash.values.each do |placement|
+    - url = "#{request.protocol}#{request.host_with_port}/#{placement.path}"
+    = link_to url, url
+    %br/
+%table
+  - placement_hash.keys.each do |placement_id|
+    - placement = placement_hash[placement_id]
+    %tr
+      %td{:colspan => 50}
+        %b
+          = h placement.path
+    - items = placement.items
+    - items.each do |item|
+      %tr
+        %td
+        - item.values.each_pair do |key,value|
+          %td
+            = h key
+            = h "=>"
+            = h value

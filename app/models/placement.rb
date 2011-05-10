@@ -1,4 +1,6 @@
 require 'pp'
+require 'builder'
+
 class Placement
   DEFAULT_ID = ""
   attr_accessor :id, :items

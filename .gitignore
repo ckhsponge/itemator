@@ -6,4 +6,5 @@ log
 public/cache
 config/deploy.rb
 .project
-
+.tmp*
+tmp

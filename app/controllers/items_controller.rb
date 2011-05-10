@@ -3,8 +3,8 @@ require 'gdata'
 require 'pp'
 class ItemsController < ApplicationController
   
-  def list
-    @folder = params[:folder]
+  def show
+    @folder = params[:id]
     @docs = Doc.find(:all, :conditions => ["folder = ?", @folder])
   end
   
@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
       if @item_parser.valid?
         #puts @item_parser.placement_hash[''].to_xml
         #@item_parser.placement_hash[''].write
-        render :action => "show"
+        render :action => "success"
       else
         render :action => "new"
       end
@@ -32,7 +32,8 @@ class ItemsController < ApplicationController
   def update
     @doc = Doc.find(params[:id])
     @item_parser = @doc.parse(google_spreadsheets_api)
-    render :action => "status_detail", :layout => false
+    render(:update) {|page| page.replace_html "#status#{params[:id]}", :file => "items/status_detail"}
+    return
   end
-
+  
 end
