@@ -17,6 +17,11 @@ class Doc < ActiveRecord::Base
     "#{folder.downcase.gsub(' ','_')}/#{title.downcase.gsub(' ','_')}"
   end
   
+  def self.distinct_folders
+    docs = Doc.unscoped.find(:all, :select => "docs.folder", :group => "docs.folder", :order => "folder")
+    return docs.collect{|i| i.folder}
+  end
+  
   def parse(google_client)
     begin
       items_csv = google_client.get(self.items_url).body

@@ -6,8 +6,7 @@ class FoldersController < ApplicationController
   skip_before_filter :authenticate_user, :only => :default
   
   def index
-    docs = Doc.find(:all, :select => "docs.folder", :group => "docs.folder")
-    @folders = docs.collect{|i| i.folder}
+    @folders = Doc.distinct_folders
   end
   
   def refresh_docs
