@@ -24,6 +24,6 @@ Itemator::Application.config.secret_token = ENV['SECRET_TOKEN'] if ENV['SECRET_T
 require 'aws/s3'
 AWS::S3::Base.establish_connection!(
   :access_key_id     => ENV['AWS_ACCESS_KEY_ID'], 
-  :secret_access_key => ENV['SECRET_ACCESS_KEY']
+  :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
 )
 
