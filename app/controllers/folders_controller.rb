@@ -1,4 +1,6 @@
 require 'pp'
+require 'aws/s3'
+
 class FoldersController < ApplicationController
   layout "items"
   skip_before_filter :authenticate_user, :only => :default
@@ -37,16 +39,31 @@ class FoldersController < ApplicationController
   end
   
   #if the placement file does not exist then send the default
-  def default
-    path = Doc.default_full_path(params[:folder], params[:title])
-    if File.exist?(path)
-      headers["Cache-Control"]="max-age=#{15*60}"
+#  def default
+#    path = Doc.default_full_path(params[:folder], params[:title])
+#    if File.exist?(path)
+#      headers["Cache-Control"]="max-age=#{15*60}"
+#      headers["Vary"]="Accept-Encoding"
+#      logger.warn "Rendering xml file: #{path}"
+#      text = File.read(path)
+#      render :xml => text
+#    else
+#      render :text => "default file not found", :status => 404
+#    end
+#  end
+  
+  def show
+    path = request.path
+    path = path.sub(/^\//, '') #remove leading slash
+    begin
+      puts path
+      object = AWS::S3::S3Object.find(path, ENV['AWS_BUCKET'])
+      value = object.value
+      headers["Cache-Control"]="max-age=#{15.minutes}"
       headers["Vary"]="Accept-Encoding"
-      logger.warn "Rendering xml file: #{path}"
-      text = File.read(path)
-      render :xml => text
-    else
-      render :text => "default file not found", :status => 404
+      render :text => value
+    rescue  AWS::S3::NoSuchKey => nsk
+      raise ItemException.new("no such key: #{path}")
     end
   end
 end

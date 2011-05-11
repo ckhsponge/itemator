@@ -8,9 +8,14 @@ gem 'rails', '3.0.7'
 #gem 'sqlite3'
 gem 'mysql'
 gem 'haml'
-gem 'gdata'
+
+#don't forget!
+#rails plugin install git://github.com/aaronchi/jrails.git
 gem 'jquery-rails', '>= 0.2.6'
-#gem 'jrails'
+
+gem 'aws-s3'
+gem 'newrelic_rpm'
+gem 'gdata'
 
 # Use unicorn as the web server
 # gem 'unicorn'

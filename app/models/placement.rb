@@ -1,5 +1,6 @@
 require 'pp'
 require 'builder'
+require 'aws/s3'
 
 class Placement
   DEFAULT_ID = ""
@@ -77,6 +78,18 @@ class Placement
   end
   
   def write
+    raise ItemException.new( "no bucket declared") unless ENV['AWS_BUCKET']
+    #bucket = Bucket.find( ENV['AWS_BUCKET'] )
+    #raise ItematorException.new( "bucket not found: '#{ENV['AWS_BUCKET']}'") unless bucket
+    begin
+      AWS::S3::S3Object.store(self.path, self.to_xml, ENV['AWS_BUCKET'])
+      puts "S3 Wrote: #{ENV['AWS_BUCKET']}/#{self.path}"
+    rescue Exception => exc
+      raise ItemException.new( "error in s3 write: #{exc.to_s}") 
+    end
+  end
+  
+  def write_file
     FileUtils.makedirs(server_dir)
     file = File.open(server_path, "w")
     file.write(self.to_xml)

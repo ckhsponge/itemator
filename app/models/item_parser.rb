@@ -56,9 +56,9 @@ class ItemParser
   end
   
   def write_xml
-    rmdir = File.join(Placement.public_dir, Item::BASE_DIR, @path)
-    puts "Removing dir: #{rmdir}"
-    FileUtils.remove_dir(rmdir, true) #force removal
+    #rmdir = File.join(Placement.public_dir, Item::BASE_DIR, @path)
+    #puts "Removing dir: #{rmdir}"
+    #FileUtils.remove_dir(rmdir, true) #force removal
     @placement_hash.values.each do |placement|
       placement.write
     end
