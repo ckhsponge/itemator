@@ -59,7 +59,7 @@ class FoldersController < ApplicationController
       puts path
       object = AWS::S3::S3Object.find(path, ENV['AWS_BUCKET'])
       value = object.value
-      headers["Cache-Control"]="max-age=#{15.minutes}"
+      headers["Cache-Control"]="public,max-age=#{15.minutes}"
       headers["Vary"]="Accept-Encoding"
       render :text => value
     rescue  AWS::S3::NoSuchKey => nsk

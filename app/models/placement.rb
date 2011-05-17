@@ -82,7 +82,7 @@ class Placement
     #bucket = Bucket.find( ENV['AWS_BUCKET'] )
     #raise ItematorException.new( "bucket not found: '#{ENV['AWS_BUCKET']}'") unless bucket
     begin
-      AWS::S3::S3Object.store(self.path, self.to_xml, ENV['AWS_BUCKET'])
+      AWS::S3::S3Object.store(self.path, self.to_xml, ENV['AWS_BUCKET']) #, {"Cache-Control" => "public,max-age=#{15.minutes}", "Vary" => "Accept-Encoding"} )
       puts "S3 Wrote: #{ENV['AWS_BUCKET']}/#{self.path}"
     rescue Exception => exc
       raise ItemException.new( "error in s3 write: #{exc.to_s}") 
