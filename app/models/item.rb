@@ -11,7 +11,6 @@ class Item
     id_index = nil
     header.each_with_index {|h, i| id_index = i if h && h.downcase == 'id' }
     raise ItemException.new("no id column for items") unless id_index
-    puts "Index #{id_index}"
     header.each_with_index do |h, i|
       next unless h || i >= row.size
       if i == id_index

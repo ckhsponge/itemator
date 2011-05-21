@@ -56,8 +56,14 @@ class FoldersController < ApplicationController
     path = request.path
     path = path.sub(/^\//, '') #remove leading slash
     begin
-      puts path
-      object = AWS::S3::S3Object.find(path, ENV['AWS_BUCKET'])
+      puts "Looking for: #{path}"
+      begin
+        object = AWS::S3::S3Object.find(path, ENV['AWS_BUCKET'])
+      rescue  AWS::S3::NoSuchKey => nsk0
+        path = path.sub(/\/placements\/.*$/,"/items.xml")
+        puts "NOT FOUND, trying: #{path}"
+        object = AWS::S3::S3Object.find( path, ENV['AWS_BUCKET'])
+      end
       value = object.value
       headers["Cache-Control"]="public, max-age=#{15.minutes}"
       headers["Vary"]="Accept-Encoding"
