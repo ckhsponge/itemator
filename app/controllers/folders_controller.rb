@@ -3,7 +3,7 @@ require 'aws/s3'
 
 class FoldersController < ApplicationController
   layout "items"
-  skip_before_filter :authenticate_user, :only => :default
+  skip_before_filter :authenticate_user, :only => :show
   
   def index
     @folders = Doc.distinct_folders
