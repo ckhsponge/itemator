@@ -16,7 +16,7 @@ Itemator::Application.routes.draw do
     get 'refresh_docs', :on => :collection
   end
   #match 'cache/:folder/:title/placements/:placement_id/items(.:format)' => 'folders#default', :as => :default_items_folder
-  match 'cache/:folder/:title/placements/:placement_id/items(.:format)' => 'folders#show'
+  match 'cache/:folder/:title/placements/:placement_id/items(.:format)' => 'folders#show', :placement_id => /.*/
   match 'cache/:folder/:title/items(.:format)' => 'folders#show'
 
   # Sample resource route with options:
