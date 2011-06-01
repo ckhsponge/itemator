@@ -23,7 +23,7 @@ Itemator::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
-  ENV['HOST_CDN'] = "statics.staging.itemator.spongecorp.com"
+  ENV['HOST_CDN'] = "localhost:3000"
   ENV['AWS_BUCKET'] = "statics.staging.itemator.spongecorp.com"
 
 end

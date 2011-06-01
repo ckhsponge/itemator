@@ -2,6 +2,11 @@
 %h1
   Docs
 %p
+  %i
+    Normally there are 2 workers available for processing updates. Requesting more updates than there are workers may result in fails.
+    %br
+    Refresh the page to update Last Success At.  
+%p
   Folder:
   %b
     = h @folder
@@ -12,17 +17,19 @@
     %td Parsed
     %td
     %td Status
+    %td Last Success At
   - @docs.each do |doc|
     %tr
-      %td{:valign => "top"}= h doc.title
-      %td{:valign => "top"}= h doc.example_url
-      %td{:valign => "top"}= h doc.parsed
+      %td{:valign => "top"}= doc.title
+      %td{:valign => "top"}= doc.example_url
+      %td{:valign => "top"}= doc.parsed
       %td{:valign => "top"}
         = link_to "update", item_path(doc), :remote => true, :method => "PUT", "update" => "status#{doc.id}", :class => "update_link"
         -#= link_to_remote "update", :url => {:action => "update", :id => doc.id}, :update => "status#{doc.id}"
         /%a{:href => url_for(:action => "parse", :id => doc.id), "data-remote" => "true", "data-update-success" => "result"} parse
       %td{:id => "status#{doc.id}", :valign => "top"}
-        %span{:title => doc.status}= h doc.status[0,75]
+        %span{:title => doc.status}= doc.status[0,75]
+      %td{:valign => "top", :nowrap => true}= doc.success_at
         
 %script
   $('.update_link').click(function() {

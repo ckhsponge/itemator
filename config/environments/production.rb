@@ -47,6 +47,6 @@ Itemator::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  ENV['HOST_CDN'] = "cdn.statics.itemator.spongecorp.com"
+  ENV['HOST_CDN'] = "cdn.itemator.spongecorp.com"
   ENV['AWS_BUCKET'] = "statics.itemator.spongecorp.com"
 end

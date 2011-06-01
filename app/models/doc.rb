@@ -30,6 +30,7 @@ class Doc < ActiveRecord::Base
       parser = ItemParser.new(:path => self.path, :items_csv => items_csv, :order_csv => order_csv)
       parser.write_xml
       self.parsed = true
+      self.success_at = Time.now
       self.status = SUCCESS_STATUS
       self.save!
     rescue GData::Client::RequestError => rerr

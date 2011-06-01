@@ -4,6 +4,7 @@ require 'aws/s3'
 class FoldersController < ApplicationController
   layout "items"
   skip_before_filter :authenticate_user, :only => :show
+  skip_before_filter :block_cdn, :only => :show
   
   def index
     @folders = Doc.distinct_folders
